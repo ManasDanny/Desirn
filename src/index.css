@@ -235,3 +235,55 @@
 .katex-display {
   margin: 20px 0;
 }
+
+.load-btn {
+  background-color: #7291ad;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #34495e;
+  width: 100%;
+  text-align: left;
+}
+
+.load-btn:hover {
+  background-color: #2980b9;
+}
+
+.load-btn:focus {
+  background-color: #2980b9;
+}
+
+.load-btn:active {
+  background-color: #21618c;
+}
+
+.save-btn {
+  background-color: #7291ad;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #34495e;
+  width: 100%;
+  text-align: left;
+}
+
+.save-btn:hover {
+  background-color: #27ae60;
+}
+
+.save-btn:focus {
+  background-color: #27ae60;
+}
+
+.save-btn:active {
+  background-color: #229954;
+}

@@ -48,6 +48,7 @@ function App() {
     if (id === selectedId) {
       setSelectedId(remainingNotes.length > 0 ? remainingNotes[0].id : null)
     }
+    
   }
 
   const handleEditorChange = useCallback((content) => {
@@ -55,6 +56,49 @@ function App() {
       updateNote(selectedId, content);
     }
   }, [selectedId, updateNote]);
+
+  const handleSave = () => {
+    const currentNote = notes.find(note => note.id === selectedId)
+    if (!currentNote) return
+
+    const content = currentNote.content
+    const blob = new Blob([content], {type: 'text/markdown'})
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = url
+
+    const firstLine = content.split('\n')[0].trim();
+    const filename = firstLine 
+      ? `${firstLine.substring(0, 30).replace(/[^\w\s-]/g, '')}.md`
+      : 'note.md';
+
+    link.download = filename
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
+
+  const handleLoad = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.md') && !file.name.endsWith('.markdown')) {
+      alert('Please select a markdown file (.md or .markdown)');
+      return;
+    }
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const newNote = {
+        id: uuidv4(),
+        content: event.target.result
+      }
+      setNotes(prevNotes => [newNote, ...prevNotes])
+    setSelectedId(newNote.id)
+    }
+    reader.readAsText(file)
+  }
 
   return (
     <div className="app">
@@ -64,6 +108,8 @@ function App() {
       onSelect = {setSelectedId}
       onCreate = {createNote}
       onDelete = {deleteNote}
+      onSave = {handleSave}
+      onLoad = {handleLoad}
       />
       <div className="main">
         {notes.length > 0 && selectedNote ? (
